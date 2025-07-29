@@ -1,0 +1,150 @@
+﻿@model List<Poultary.BL.Models.mortality>
+@using System.Text.Json
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary">🐣 Mortality Records</h2>
+    <a asp-action="Create" class="btn btn-success mb-3">➕ Add New Record</a>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive table-scroll">
+                <table class="table table-bordered table-striped mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Batch Name</th>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Reason</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var record in Model)
+                        {
+                            <tr>
+                                <td>@record.batchName</td>
+                                <td>@record.date.ToShortDateString()</td>
+                                <td>@record.count</td>
+                                <td>@record.reason</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@record.mortalityId" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                                    <form asp-action="Delete" asp-route-id="@record.mortalityId" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this record?');">🗑️ Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daily Chick Mortality</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="areaChart" style="min-height:250px; height:250px; max-height:300px; width:100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Browser Usage</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="min-height:250px; height:250px; max-height:300px; width:100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+        <script>
+            const monthLabels = @Html.Raw(JsonSerializer.Serialize(ViewBag.MonthLabels ?? new List<string>()));
+            const monthData = @Html.Raw(JsonSerializer.Serialize(ViewBag.MonthData ?? new List<int>()));
+
+            const areaCtx = document.getElementById('areaChart').getContext('2d');
+
+            new Chart(areaCtx, {
+                type: 'bar',
+                data: {
+                    labels: monthLabels,
+                    datasets: [{
+                        label: 'Daily Chick Mortalities',
+                        data: monthData,
+                        backgroundColor: 'rgba(60, 141, 188, 0.8)',
+                        borderColor: 'rgba(60, 141, 188, 1)',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        hoverBackgroundColor: 'rgba(60, 141, 188, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            ticks: { color: '#6c757d' },
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#6c757d' },
+                            grid: {
+                                color: 'rgba(200, 200, 200, 0.2)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            backgroundColor: '#3c8dbc',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#3c8dbc',
+                            borderWidth: 1
+                        },
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#6c757d',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+                        const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: pieLabels,
+                    datasets: [{
+                        data: pieData,
+                        backgroundColor: [
+                            '#f56954', '#00a65a', '#f39c12', '#00c0ef',
+                            '#3c8dbc', '#d2d6de', '#8e44ad', '#16a085'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        </script>
+
+        }

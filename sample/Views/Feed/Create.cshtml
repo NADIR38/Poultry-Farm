@@ -1,0 +1,72 @@
+﻿@model Poultary.BL.Models.feed
+@using System.Text.Json
+@{
+	Layout = "_Layout";
+}
+<div class="container mt-4">
+	<h2 class="text-primary">🐔 Create New Feed Record</h2>
+	<form asp-action="Create" method="post">
+		<div class="mb-3">
+			<label asp-for="name" class="form-label">Batch Name</label>
+			<input asp-for="name" class="form-control" placeholder="" required />
+			<span asp-validation-for="name" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="quantity" class="form-label">Quantity (in kg)</label>
+			<input asp-for="quantity" type="number" step="0.01" class="form-control" placeholder="enter quantity" required />
+			<span asp-validation-for="quantity" class="text-danger"></span>
+		</div>
+	<div class="mb-3">
+		<label asp-for="suppliername" class="form-label">Supplier Name</label>
+		<div class="input-group">
+			<input asp-for="suppliername" class="form-control" id="supplier-input" autocomplete="off" />
+			<a asp-controller="Suppliers" asp-action="Create" class="btn btn-outline-success" title="Add New Supplier">
+				<i class="fas fa-plus"></i>
+			</a>
+		</div>
+		<span asp-validation-for="suppliername" class="text-danger"></span>
+	</div>
+		<div class="mb-3">
+			<label asp-for="price" class="form-label">Price (total)</label>
+			<input asp-for="price" type="number" step="0.01" class="form-control" placeholder="" required />
+			<span asp-validation-for="price" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="weight" class="form-label">Total Weight (in kg)</label>
+			<input asp-for="weight" type="number" step="0.01" class="form-control" required />
+			<span asp-validation-for="weight" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="purchasedate" class="form-label">Purchase Date</label>
+			<input asp-for="purchasedate" type="date" class="form-control" placeholder="" required />
+			<span asp-validation-for="purchasedate" class="text-danger"></span>
+		</div>
+		<button type="submit" class="btn btn-primary">Create Record</button>
+		<a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+	</form>
+	</div>
+@section Scripts {
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+	<link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" />
+
+	<script>
+		$(function () {
+			var $input = $("#supplier-input");
+
+			$input.autocomplete({
+				source: function (request, response) {
+					$.ajax({
+						url: '@Url.Action("SearchSuppliers", "Feed")',
+						data: { term: request.term },
+						success: function (data) {
+							response(data);
+						}
+					});
+				},
+				minLength: 0
+			}).focus(function () {
+				$(this).autocomplete("search", $(this).val());
+			});
+		});
+	</script>
+}

@@ -1,0 +1,55 @@
+﻿@model Poultary.BL.Models.ChickenBatches
+
+@{
+	Layout = "_MinimalLayout"; 
+}
+
+<div class="container mt-4">
+    <h2 class="text-warning">✏️ Edit Chick Batch</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        </div>
+    }
+    <form asp-action="Edit" method="post" class="mt-4">
+        <input type="hidden" asp-for="BatchId" />
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="BatchName" class="form-label"></label>
+                <input asp-for="BatchName" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="PurchaseDate" class="form-label"></label>
+                <input asp-for="PurchaseDate" type="date" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label asp-for="BatchPrice" class="form-label"></label>
+                <input asp-for="BatchPrice" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="BatchWeight" class="form-label"></label>
+                <input asp-for="BatchWeight" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="BatchQuantity" class="form-label"></label>
+                <input asp-for="BatchQuantity" class="form-control" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SupplierName" class="form-label"></label>
+            <input asp-for="SupplierName" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">💾 Update</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>

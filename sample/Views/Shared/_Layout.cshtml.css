@@ -1,0 +1,121 @@
+﻿html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --text-color: #000;
+    --bg-gradient: linear-gradient(135deg, #00c9ff, #92fe9d);
+    --bg-color: #ffffff;
+    --navbar-bg: #0d6efd;
+    --footer-bg: #0d6efd;
+}
+
+[data-theme="dark"] {
+    --text-color: #f1f1f1;
+    --bg-gradient: #121212;
+    --bg-color: #121212;
+    --navbar-bg: #1f1f1f;
+    --footer-bg: #1f1f1f;
+}
+
+html, body {
+    height: 100%;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
+    margin-bottom: 60px; 
+}
+
+.navbar {
+    background-color: var(--navbar-bg) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width:100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+    .nav-link:hover {
+        color: #ffe600 !important;
+    }
+
+    .nav-link i.fa-egg {
+        margin-right: 5px;
+        color: #fff9db;
+    }
+
+#theme-toggle {
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    padding: 4rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-width: 1000px;
+    margin: 0 auto;
+
+}
+
+[data-theme="dark"] .glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer {
+    background-color: var(--footer-bg);
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    font-size: 14px;
+    width: 100%;
+    position: absolute;
+    margin-bottom: 0;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0b5ed7;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .btn-primary:hover {
+        background-color: #084298;
+        border-color: #073c8a;
+    }
+
+#toast-container > div {
+    opacity: 0.95;
+    font-size: 15px;
+    padding-top:2rem;
+}

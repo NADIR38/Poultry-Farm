@@ -1,0 +1,43 @@
+﻿@model List<Poultary.BL.Models.feed>
+@using System.Text.Json;
+@{
+	Layout = "_Layout";
+}
+<div class="container mt-4">
+	<h2 class="text-primary">🐔 Feed Records</h2>
+	<a asp-action="Create" class="btn btn-success mb-3">➕ Add New Record</a>
+
+	<div class="card shadow-sm">
+		<div class="card-body">
+			<div class="table-responsive table-scroll">
+				<table class="table table-bordered table-striped mb-0">
+					<thead class="table-dark">
+						<tr>
+							<th>Batch Name</th>
+							<th>Quantity</th>
+							<th>Supplier Name</th>
+							<th>Price</th>
+							<th>Total Weight</th>
+							<th>Purchase Date</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var record in Model)
+						{
+							<tr>
+								<td>@record.name</td>
+								<td>@record.quantity</td>
+								<td>@record.suppliername</td>
+								<td>@record.price</td>
+								<td>@record.weight</td>
+								<td>@record.purchasedate</td>
+
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	</div>

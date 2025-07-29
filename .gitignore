@@ -1,0 +1,74 @@
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.log
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code settings
+.vscode/
+
+# Rider settings
+.idea/
+*.sln.iml
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# IIS Express
+.vs/
+*.vspscc
+*.vssscc
+*.scc
+
+# NuGet packages
+*.nupkg
+packages/
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio 2017+
+*.VC.db
+*.VC.VC.opendb
+Generated_Code/
+
+# Entity Framework
+*.cache
+*.dbmdl
+*.bak
+*.mdf
+*.ldf
+
+# Web Publish
+.publish/
+*.Publish.xml
+
+# SQL Server files
+*.sql
+*.sqlproj.user
+
+# Temporary files
+~$*
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Others
+Thumbs.db
+Desktop.ini

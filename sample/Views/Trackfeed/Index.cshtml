@@ -1,0 +1,44 @@
+﻿@model List<PoultryProject.BL.Models.trackfeed>
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary">🐣 Track Feed</h2>
+    <a asp-action="Create" class="btn btn-success mb-3">➕ Add New Record</a>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive table-scroll">
+                <table class="table table-bordered table-striped mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Batch Name</th>
+                            <th>Date</th>
+                            <th>Sacks Used</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var record in Model)
+                        {
+                            <tr>
+                                <td>@record.name</td>
+                                <td>@record.date.ToShortDateString()</td>
+                                <td>@record.sacksUsed</td>
+                                
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@record.id" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                                    <form asp-action="Delete" asp-route-id="@record.id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this record?');">🗑️ Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            </div>
+           </div>
+           </div>

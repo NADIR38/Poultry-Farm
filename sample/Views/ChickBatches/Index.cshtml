@@ -1,0 +1,53 @@
+﻿@model List<Poultary.BL.Models.ChickenBatches>
+
+@{
+    // ViewData["Title"] = "🐣 Chick Batches";
+	Layout = "_Layout"; 
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary" style="color:#112d40">🐣 Chick Batches</h2>
+
+    <a asp-action="Create" class="btn btn-success mb-3">➕ Add New Batch</a>
+
+    <div class="card shadow-sm">
+        <div class="card-body" >
+            <div class="table-responsive table-scroll">
+                <table class="table table-bordered table-striped mb-0">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Batch Name</th>
+                        <th>Arrival Date</th>
+                        <th>Price</th>
+                        <th>Weight</th>
+                        <th>Quantity</th>
+                        <th>Supplier</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var b in Model)
+                    {
+                        <tr>
+                            <td>@b.BatchName</td>
+                            <td>@b.PurchaseDate.ToShortDateString()</td>
+                            <td>@b.BatchPrice</td>
+                            <td>@b.BatchWeight</td>
+                            <td>@b.BatchQuantity</td>
+                            <td>@b.SupplierName</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@b.BatchId" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                                <form asp-action="Delete" asp-route-id="@b.BatchId" method="post" onsubmit="return confirm('Are you sure you want to delete this batch?');" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm">🗑 Delete</button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>

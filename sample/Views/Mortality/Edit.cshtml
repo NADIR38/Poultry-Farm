@@ -1,0 +1,70 @@
+﻿@model Poultary.BL.Models.mortality
+
+@{
+    // ViewData["Title"] = "Edit Chick Batch";
+	Layout = "_MinimalLayout";
+}
+
+<div class="container mt-4">
+    <h2 class="text-warning">✏️ Edit Mortality</h2>
+
+    <form asp-action="Edit" method="post" class="mt-4">
+        <input type="hidden" asp-for="batchId" />
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label asp-for="batchName" class="form-label">Batch Name</label>
+                <div class="input-group">
+                    <input asp-for="batchName" class="form-control" id="Batch-input" autocomplete="off" />
+                    <a asp-controller="ChickBatches" asp-action="Create" class="btn btn-outline-success" title="Batch Name">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+                <span asp-validation-for="batchName" class="text-danger"></span>
+            </div>
+          
+
+            <div class="col-md-4">
+                <label asp-for="date" class="form-label">Date</label>
+                <input asp-for="date" type="date" class="form-control" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label asp-for="count" class="form-label">Count</label>
+                <input asp-for="count" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="reason" class="form-label">Reason</label>
+                <input asp-for="reason" class="form-control" />
+            </div>
+		</div>
+                 <button type="submit" class="btn btn-primary " >💾 Update</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" />
+
+    <script>
+        $(function () {
+            var $input = $("#Batch-input");
+
+            $input.autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchBatches", "Mortality")',
+                        data: { term: request.term },
+                        success: function (data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 0
+            }).focus(function () {
+                $(this).autocomplete("search", $(this).val());
+            });
+        });
+    </script>
+}

@@ -1,0 +1,88 @@
+﻿@model Poultary.BL.Models.ChickenBatches
+
+@{
+    // ViewData["Title"] = "Add New Chick Batch";
+}
+
+<div class="container mt-4">
+    <h2 class="text-success">➕ Add New Chick Batch</h2>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        </div>
+    }
+
+    <form asp-action="Create" class="mt-4">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label asp-for="BatchName" class="form-label"></label>
+                <input asp-for="BatchName" class="form-control" />
+            </div>
+            <div class="col-md-6">
+                <label asp-for="PurchaseDate" class="form-label"></label>
+                <input asp-for="PurchaseDate" type="date" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label asp-for="BatchPrice" class="form-label"></label>
+                <input asp-for="BatchPrice" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="BatchWeight" class="form-label"></label>
+                <input asp-for="BatchWeight" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label asp-for="BatchQuantity" class="form-label"></label>
+                <input asp-for="BatchQuantity" class="form-control" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SupplierName" class="form-label">Supplier Name</label>
+            <div class="input-group">
+                <input asp-for="SupplierName" class="form-control" id="supplier-input" autocomplete="off" />
+                <a asp-controller="Suppliers" asp-action="Create" class="btn btn-outline-success" title="Add New Supplier">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+            <span asp-validation-for="SupplierName" class="text-danger"></span>
+        </div>
+
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" />
+
+    <script>
+        $(function () {
+            var $input = $("#supplier-input");
+
+            $input.autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchSuppliers", "ChickBatches")',
+                        data: { term: request.term },
+                        success: function (data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 0 
+            }).focus(function () {
+                $(this).autocomplete("search", $(this).val());
+            });
+        });
+    </script>
+}

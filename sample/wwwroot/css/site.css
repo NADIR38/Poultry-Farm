@@ -1,0 +1,331 @@
+﻿/* =====================
+   Base and Reset
+===================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 60px;
+    min-height: 100vh;
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+/* Apply gradient to full page background */
+
+
+/* =====================
+   Theme Variables
+===================== */
+:root {
+    --text-color: 00000;
+    --bg-gradient: linear-gradient( 45deg, hsl(239deg 100% 15%) 0%, hsl(229deg 100% 16%) 8%, hsl(224deg 100% 16%) 17%, hsl(220deg 100% 16%) 25%, hsl(216deg 100% 16%) 33%, hsl(213deg 100% 16%) 42%, hsl(208deg 100% 15%) 50%, hsl(204deg 100% 14%) 58%, hsl(198deg 100% 13%) 67%, hsl(192deg 100% 12%) 75%, hsl(186deg 100% 11%) 83%, hsl(179deg 100% 10%) 92%, hsl(174deg 89% 11%) 100% );
+    --bg-color: #ffffff;
+    --navbar-bg: #112d40;
+    --footer-bg: #0d6efd;
+}
+
+[data-theme="dark"] {
+    --text-color: #0d6efd;
+    --bg-gradient: #3d3d3d;
+    --bg-color: #3d3d3d;
+    --navbar-bg: #1f1f1f;
+    --footer-bg: #1f1f1f;
+}
+
+/* =====================
+   Layout Elements
+===================== */
+.navbar {
+    background-color: var(--navbar-bg) !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+    .nav-link:hover {
+        color: #ffe600 !important;
+    }
+
+/*.footer {
+    background-color: var(--footer-bg);
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}*/
+
+/* =====================
+   Components
+===================== */
+.glass-panel {
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-width: 1000px;
+    margin: 0 auto;
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .glass-panel {
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-scroll {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+    .table-scroll thead th {
+        position: sticky;
+        top: 0;
+        background-color: #343a40;
+        color: white;
+        z-index: 2;
+    }
+
+/* =====================
+   Buttons
+===================== */
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0b5ed7;
+    transition: background-color 0.3s ease-in-out;
+}
+
+    .btn-primary:hover {
+        background-color: #084298;
+        border-color: #073c8a;
+    }
+
+#theme-toggle {
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* =====================
+   Form Elements
+===================== */
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+.form-control:focus, .btn:focus, .btn:active:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+.main-sidebar {
+    background: #1a4560;
+}
+/* =====================
+   Toast Notifications
+===================== */
+#toast-container > div {
+    opacity: 0.95;
+    font-size: 15px;
+    padding-top: 2rem;
+}
+
+.table-striped {
+    background-color:#fff;
+}
+/* =====================
+   Dark Mode Text Fixes
+===================== */
+body[data-theme="dark"] a,
+body[data-theme="dark"] .nav-link,
+body[data-theme="dark"] h1,
+body[data-theme="dark"] h2,
+body[data-theme="dark"] h3,
+body[data-theme="dark"] h4,
+body[data-theme="dark"] h5,
+body[data-theme="dark"] h6,
+body[data-theme="dark"] p,
+body[data-theme="dark"] span,
+body[data-theme="dark"] td,
+body[data-theme="dark"] th {
+    color: var(--text-color) !important;
+}
+[data-theme="dark"] body,
+[data-theme="dark"] .content-wrapper,
+[data-theme="dark"] .content,
+[data-theme="dark"] .card,
+[data-theme="dark"] .glass-panel,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .table,
+[data-theme="dark"] .table-scroll,
+[data-theme="dark"] .table-striped {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0 !important;
+}
+.glass-panel {
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+}
+.content-wrapper {
+    background-color: var(--bg-gradient);
+}
+    /* Tables - borders and header fix */
+    [data-theme="dark"] .table thead th {
+        background-color: #2b2b2b !important;
+        color: #ffffff !important;
+        border-color: #444;
+    }
+.table-scroll {
+background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+}
+    [data-theme="dark"] .table td {
+        border-color: #444;
+    }
+
+/* Input fields */
+[data-theme="dark"] .form-control {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: #555;
+}
+
+    [data-theme="dark"] .form-control::placeholder {
+        color: #aaa;
+    }
+
+/* Button override */
+[data-theme="dark"] .btn {
+    color: #fff;
+}
+
+/* Fix for cards and modals */
+[data-theme="dark"] .modal-header,
+[data-theme="dark"] .card-header {
+    background-color: #2b2b2b;
+    color: #fff;
+}
+/*.card-body {
+    background: #c3e3f4;
+}*/
+[data-theme="dark"] .modal-footer {
+    background-color: #2b2b2b;
+}
+
+/* Optional: border-radius and border-softening */
+.card, .glass-panel {
+    border-radius: 12px;
+    border: none;
+}
+[data-theme="dark"] .main-sidebar {
+    background :#3d3d3d;
+    border:10px rgba(2, 0, 36, 1);
+}
+[data-theme="dark"] .table thead th {
+    background-color: #2b2b2b !important;
+    color: #ffffff !important;
+    border-color: #444;
+}
+
+[data-theme="dark"] .table td {
+    border-color: #444;
+}
+
+/* Input fields */
+[data-theme="dark"] .form-control {
+    background-color: #2c2c2c;
+    color: #fff;
+    border-color: #555;
+}
+.form-label {
+    color: #ffe600;
+}
+[data-theme="dark"] .form-control::placeholder {
+    color: #aaa;
+}
+
+/* Button override */
+[data-theme="dark"] .btn {
+    color: #fff;
+}
+
+/* Fix for cards and modals */
+[data-theme="dark"] .modal-header,
+[data-theme="dark"] .card-header {
+    background-color: #2b2b2b;
+    color: #fff;
+}
+
+[data-theme="dark"] .modal-footer {
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+}
+
+/* Optional: border-radius and border-softening */
+.card, .glass-panel {
+    border-radius: 12px;
+    border: none;
+}
+
+body[data-theme="dark"] .btn-primary {
+    background-color: #2563eb;
+    border-color: #1d4ed8;
+}
+[data-theme="dark"] .card-body {
+    background-color: #1e1e1e !important;
+    color: #ffffff !important;
+}
+
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .content,
+body[data-theme="dark"] .content-wrapper {
+    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    color: var(--text-color);
+}
+.main-sidebar {
+    background-color: #112d40;
+}
+/*body[data-theme="dark"] .main-header,
+body[data-theme="dark"] .main-sidebar,
+body[data-theme="dark"] .main-footer {*/
+/*    background: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    color: var(--text-color) !important;*/
+
+/*}*/

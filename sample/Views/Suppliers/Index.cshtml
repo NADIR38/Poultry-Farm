@@ -1,0 +1,48 @@
+﻿@model List<Poultary.BL.Models.Supplier>
+@{
+    // ViewData["Title"] = "Suppliers";
+    Layout = "_Layout";
+}
+<section class="content mt-4">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="text-primary">🛒 Suppliers</h2>
+            <a asp-action="Create" class="btn btn-success">➕ Add New Supplier</a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped m-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Supplier Name</th>
+                                <th>Contact</th>
+                                <th>Type</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var supplier in Model)
+                            {
+                                <tr>
+                                    <td>@supplier.Name</td>
+                                    <td>@supplier.Contact</td>
+                                    <td>@supplier.SupplierType</td>
+                                    <td>@supplier.Address</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@supplier.SupplierID" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                                        <form asp-action="Delete" asp-route-id="@supplier.SupplierID" method="post" onsubmit="return confirm('Are you sure you want to delete this supplier?');" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm">🗑 Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

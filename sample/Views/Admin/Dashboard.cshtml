@@ -1,0 +1,150 @@
+﻿@using System.Text.Json
+@{
+    Layout = "_Layout";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 style="color:#fff">Admin Dashboard</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>150</h3>
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <p>Bounce Rate</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>44</h3>
+                        <p>User Registrations</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>65</h3>
+                        <p>Unique Visitors</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Monthly Chick Batches</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="areaChart" style="min-height:250px; height:250px; max-height:300px; width:100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quantity/Supplier</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart" style="min-height:250px; height:250px; max-height:300px; width:100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <script>
+        const monthLabels = @Html.Raw(JsonSerializer.Serialize(ViewBag.MonthLabels ?? new List<string>()));
+        const monthData = @Html.Raw(JsonSerializer.Serialize(ViewBag.MonthData ?? new List<int>()));
+        const pieLabels = @Html.Raw(JsonSerializer.Serialize(ViewBag.PieLabels ?? new List<string>()));
+        const pieData = @Html.Raw(JsonSerializer.Serialize(ViewBag.PieValues ?? new List<int>()));
+
+        const areaCtx = document.getElementById('areaChart').getContext('2d');
+        new Chart(areaCtx, {
+            type: 'line',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Chick Quantity',
+                    data: monthData,
+                    backgroundColor: 'rgba(60,141,188,0.2)',
+                    borderColor: 'rgba(60,141,188,13)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: pieLabels,
+                datasets: [{
+                    data: pieData,
+                    backgroundColor: [
+                        '#f56954', '#00a65a', '#f39c12', '#00c0ef',
+                        '#3c8dbc', '#d2d6de', '#8e44ad', '#16a085'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+
+}
