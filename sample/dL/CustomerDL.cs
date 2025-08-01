@@ -1,21 +1,22 @@
 ﻿using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using sample.Interfaces;
 using sample.Models;
 
 namespace pro.DL
 {
-    public class CustomerDL
+    public class CustomerDL : ICrudDL<Customers>
     {
-        public static bool AddCustomer(Customers cus)
+        public bool Add(Customers t)
         {
             try
             {
                 string query = @"insert into customers (Name,ContactInfo,Address) values (@name,@contact,@address)";
                 var parameterDict = new Dictionary<string, object>
                 {
-                    {"@name", cus.Name },
-                    {"@contact", cus.Contact },
-                    {"@address", cus.Address },
+                    {"@name", t.Name },
+                    {"@contact", t.Contact },
+                    {"@address", t.Address },
                 };
 
                 MySqlParameter[] parameters = DatabaseHelper.CreateMySqlParameters(parameterDict);
@@ -28,7 +29,7 @@ namespace pro.DL
             catch (Exception) { return false; }
         }
 
-        public static bool UpdateCustomers(Customers cus, int CustomerID)
+        public bool Update(Customers t, int id)
         {
             try
             {
@@ -40,10 +41,10 @@ namespace pro.DL
 
                 var parameterDict = new Dictionary<string, object>
                 {
-                    {"@name", cus.Name },
-                    {"@contact", cus.Contact },
-                    {"@address", cus.Address },
-                    {"@id", CustomerID }
+                    {"@name", t.Name },
+                    {"@contact", t.Contact },
+                    {"@address", t  .Address },
+                    {"@id", id }
                 };
 
                 MySqlParameter[] parameters = DatabaseHelper.CreateMySqlParameters(parameterDict);
@@ -57,7 +58,7 @@ namespace pro.DL
             catch (Exception) { return false; }
         }
 
-        public static bool DeleteCustomer(int id)
+            public bool Delete(int id)
         {
             try
             {
@@ -77,7 +78,7 @@ namespace pro.DL
             catch (Exception) { return false; }
         }
 
-        public static List<Customers> GetCustomers()
+            public List<Customers> GetAllList()
         {
             string query = "SELECT CustomerID, Name, ContactInfo, Address FROM customers";
             List<Customers> cus = new List<Customers>();
@@ -139,5 +140,10 @@ namespace pro.DL
 
             return cus;
         }
+
+
+
+
+     
     }
 }

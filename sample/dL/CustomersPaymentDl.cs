@@ -1,9 +1,12 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
+using sample.Interfaces;
+using sample.Models;
 using System.Data;
 
 namespace sample.dL
 {
-    public class CustomersPaymentDl
+    public class CustomersPaymentDl : ICrudDL<CustomerPayments>
     {
         public static DataTable LoadCustomerPayments()
         {
@@ -93,5 +96,113 @@ namespace sample.dL
             }
         }
 
+        public bool Add(CustomerPayments t)
+        {
+
+            try
+            {
+                string query = @"insert into customerpayments (CustomerId,BillID,'payed amount',Dueamount,Notes) values (@customerID,@billID,@payedAmount,@dueamount,@notes)";
+                var parameterDict = new Dictionary<string, object>
+                {
+                    {"@customerID", t.CustomerId },
+                    {"@billID", t.BillId },
+                    {"@payedAmount", t.PayedAmount },
+                    {"@dueamount", t.DueAmount },
+                    {"@notes", t.Notes }
+                };
+
+                MySqlParameter[] parameters = DatabaseHelper.CreateMySqlParameters(parameterDict);
+
+                DatabaseHelper.ExecuteNonQuery(query, parameters);
+                return true;
+            }
+            catch (SqlException) { return false; }
+            catch (InvalidOperationException) { return false; }
+            catch (Exception) { return false; }
+        }
+
+        public bool Update(CustomerPayments t, int id)
+        {
+
+            try
+            {
+                string query = @"update customerpayments 
+                                 set CustomerId = @customerID, 
+                                     BillId = @billID,               
+                                     PayedAmount = @payedAmount,
+                                    DueAmount = @dueamount    ,
+                                    notes = @Notes    
+                                 where PaymentId = @id";
+
+                var parameterDict = new Dictionary<string, object>
+                {
+                    {"@customerID", t.CustomerId },
+                    {"@billID", t.BillId },
+                    {"@payedAmount", t.PayedAmount },
+                    {"@dueamount", t.DueAmount },
+                    {"@notes", t.Notes },
+                    {"@id", id }
+                };
+
+                MySqlParameter[] parameters = DatabaseHelper.CreateMySqlParameters(parameterDict);
+
+
+                int rowsAffected = DatabaseHelper.ExecuteNonQuery(query, parameters);
+                return rowsAffected > 0;
+            }
+            catch (SqlException) { return false; }
+            catch (InvalidOperationException) { return false; }
+            catch (Exception) { return false; }
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                string query = @"delete from customerpayments where PaymentId=@ID";
+                var parameterDict = new Dictionary<string, object>
+                {
+                    {"@ID", id }
+                };
+
+                MySqlParameter[] parameters = DatabaseHelper.CreateMySqlParameters(parameterDict);
+
+
+                int rows = DatabaseHelper.ExecuteNonQuery(query, parameters);
+                return rows > 0;
+            }
+            catch (SqlException) { return false; }
+            catch (Exception) { return false; }
+        }
+
+        public List<CustomerPayments> GetAllList()
+        {
+
+            string query = "SELECT CustomerId,BillID,'payed amount',Dueamount,Notes FROM customerpayments";
+            List<CustomerPayments> cus = new List<CustomerPayments>();
+
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new MySqlCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CustomerPayments s = new CustomerPayments
+                        {
+                            CustomerId = Convert.ToInt32(reader["CustomerId"]),
+                            BillId = Convert.ToInt32(reader["BillID"]),
+                            PayedAmount = Convert.ToInt32(reader["'payed amount'"]),
+                            DueAmount = Convert.ToInt32(reader["Dueamount"]),
+                            Notes = reader["Notes"].ToString()
+                        };
+                        cus.Add(s);
+                    }
+                }
+            }
+
+            return cus;
+        }
     }
 }

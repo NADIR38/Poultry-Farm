@@ -1,9 +1,10 @@
 ﻿using pro.DL;
+using sample.Interfaces;
 using sample.Models;
 
 namespace sample.BL
 {
-    public class CustomerBl
+    public class CustomerBl : ICrudBL<Customers>
     {
         public bool Add(Customers s)
         {
@@ -23,19 +24,20 @@ namespace sample.BL
             return CustomerDL.UpdateCustomers(s, id);
         }
 
-        public bool delete(int id)
+        public bool Delete(int id)
         {
             return CustomerDL.DeleteCustomer(id);
         }
 
-        public List<Customers> GetCustomers()
+        public List<Customers> GetList()
         {
             return CustomerDL.GetCustomers();
         }
 
-        public List<Customers> GetCustomersbyName(string name)
+        public List<Customers> GetListByName(string name)
         {
             return CustomerDL.SearchCustomersByName(name);
         }
+
     }
 }
