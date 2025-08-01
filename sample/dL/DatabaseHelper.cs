@@ -51,4 +51,10 @@ public static class DatabaseHelper
             cmd.Parameters.AddRange(parameters);
         return cmd.ExecuteScalar();
     }
+    public static MySqlParameter[] CreateMySqlParameters(Dictionary<string, object> parameterDict)
+    {
+        return parameterDict
+                    .Select(p => new MySqlParameter(p.Key, p.Value ?? DBNull.Value))
+                    .ToArray();
+    }
 }
