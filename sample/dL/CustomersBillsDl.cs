@@ -91,7 +91,7 @@ namespace sample.dL
 
             try
             {
-                string query = @"update customerpayments 
+                string query = @"update customerbills 
                                  set CustomerId = @customerID,               
                                      SaleDate = @saleDate,
                                     weight = @weight    ,

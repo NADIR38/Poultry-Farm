@@ -5,32 +5,39 @@ namespace sample.BL
 {
     public class CustomerPriceRecordBL : ICrudBL<CustomerPriceRecord>
     {
-        private readonly ICrudDL<CustomerPayments> _customerPaymentsDL;
+        private readonly ICrudDL<CustomerPriceRecord> _customerPriceRecordDL;
 
-        public CustomerPriceRecordBL(ICrudDL<CustomerPayments> customerPaymentsDL)
+        public CustomerPriceRecordBL(ICrudDL<CustomerPriceRecord> customerPriceRecordDL)
         {
-            _customerPaymentsDL = customerPaymentsDL;
+            _customerPriceRecordDL = customerPriceRecordDL;
         }
         public bool Add(CustomerPriceRecord t)
         {
 
             if (t.CustomerId <= 0) return false;
-            if (t.BillId <= 0) return false;
-            if (t.PayedAmount <= 0) return false;
-            if (t.DueAmount < 0) return false;
-            if (string.IsNullOrWhiteSpace(t.Notes)) return false;
-
-            return _customerPaymentsDL.Add(t);
+            if (t.Date <= DateTime.MinValue) return false;
+            if (t.Payment <= 0) return false;
+            if (t.BillId < 0) return false;
+            return _customerPriceRecordDL.Add(t);
         }
 
         public bool Delete(int id)
         {
-            return _customerPaymentsDL.Delete(id);
+            if (id <= 0) return false;
+
+            return _customerPriceRecordDL.Delete(id);
+        }
+
+        public CustomerPriceRecord GetById(int id)
+        {
+            if (id <= 0) return null;
+
+            return _customerPriceRecordDL.GetById(id);
         }
 
         public List<CustomerPriceRecord> GetList()
         {
-            return _customerPaymentsDL.GetAllList();
+            return _customerPriceRecordDL.GetAllList();
         }
 
 
@@ -38,12 +45,11 @@ namespace sample.BL
         {
 
             if (t.CustomerId <= 0) return false;
-            if (t.BillId <= 0) return false;
-            if (t.PayedAmount <= 0) return false;
-            if (t.DueAmount < 0) return false;
-            if (string.IsNullOrWhiteSpace(t.Notes)) return false;
+            if (t.Date <= DateTime.MinValue) return false;
+            if (t.Payment <= 0) return false;
+            if (t.BillId < 0) return false;
 
-            return _customerPaymentsDL.Update(t, id);
+            return _customerPriceRecordDL.Update(t, id);
         }
     }
 }

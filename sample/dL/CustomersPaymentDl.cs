@@ -208,7 +208,7 @@ namespace sample.dL
 
         public CustomerPayments GetById(int id)
         {
-            string query = "SELECT CustomerId,BillID,`payed amount`,Dueamount,Notes FROM customerbills WHERE PaymentId=@id";
+            string query = "SELECT CustomerId,BillID,`payed amount`,Dueamount,Notes FROM customerpayments WHERE PaymentId=@id";
             CustomerPayments payments = null;
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -239,4 +239,4 @@ namespace sample.dL
         }
     }
     }
-}
+

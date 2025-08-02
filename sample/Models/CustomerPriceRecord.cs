@@ -7,6 +7,8 @@
         public Customers Customers { get; set; }
         public DateTime Date {  get; set; }
         public decimal Payment {  get; set; }
+        public int BillId { get; set; }
+        public CustomerBills CustomerBills { get; set; }
 
     }
 }
