@@ -93,10 +93,11 @@ namespace pro.DL
                     {
                         Customers s = new Customers
                         {
-                            CustomerId = Convert.ToInt32(reader["CustomerID"]),
-                            Name = reader["Name"].ToString(),
-                            Contact = reader["ContactInfo"].ToString(),
-                            Address = reader["Address"].ToString()
+
+                            CustomerId = reader["CustomerID"] != DBNull.Value ? Convert.ToInt32(reader["CustomerID"]) : 0,
+                            Name = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : string.Empty,
+                            Contact = reader["ContactInfo"] != DBNull.Value ? reader["ContactInfo"].ToString() : string.Empty,
+                            Address = reader["Address"] != DBNull.Value ? reader["Address"].ToString() : string.Empty
                         };
                         cus.Add(s);
                     }
@@ -127,10 +128,10 @@ namespace pro.DL
                         {
                             Customers s = new Customers
                             {
-                                CustomerId = Convert.ToInt32(reader["CustomerID"]),
-                                Name = reader["Name"].ToString(),
-                                Contact = reader["ContactInfo"].ToString(),
-                                Address = reader["Address"].ToString()
+                                CustomerId = reader["CustomerID"] != DBNull.Value ? Convert.ToInt32(reader["CustomerID"]) : 0,
+                                Name = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : string.Empty,
+                                Contact = reader["ContactInfo"] != DBNull.Value ? reader["ContactInfo"].ToString() : string.Empty,
+                                Address = reader["Address"] != DBNull.Value ? reader["Address"].ToString() : string.Empty
                             };
                             cus.Add(s);
                         }
@@ -141,9 +142,38 @@ namespace pro.DL
             return cus;
         }
 
+        public Customers GetById(int id)
+        {
+            string query = "SELECT Name, ContactInfo, Address  FROM customers WHERE CustomerID = @id";
+            Customers customer = null;
 
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
 
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            customer = new Customers
+                            {
+                                CustomerId = reader["CustomerID"] != DBNull.Value ? Convert.ToInt32(reader["CustomerID"]) : 0,
 
-     
+                                Name = reader["Name"] != DBNull.Value ? reader["Name"].ToString() : string.Empty,
+                                Contact = reader["ContactInfo"] != DBNull.Value ? reader["ContactInfo"].ToString() : string.Empty,
+
+                                Address = reader["Address"] != DBNull.Value ? reader["Address"].ToString() : string.Empty
+                            };
+                        }
+                    }
+                }
+            }
+
+            return customer;
+        }
     }
+    
 }

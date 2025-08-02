@@ -6,32 +6,41 @@ namespace sample.BL
 {
     public class CustomerBl : ICrudBL<Customers>
     {
-        public bool Add(Customers s)
-        {
-            if (string.IsNullOrWhiteSpace(s.Name)) return false;
-            if (string.IsNullOrWhiteSpace(s.Contact)) return false;
-            if (string.IsNullOrWhiteSpace(s.Address)) return false;
+        private readonly ICrudDL<Customers> _customerDL;
 
-            return CustomerDL.AddCustomer(s);
+        public CustomerBl(ICrudDL<Customers> customerDL)
+        {
+            _customerDL = customerDL;
         }
 
-        public bool Update(Customers s, int id)
+        public bool Add(Customers t)
         {
-            if (string.IsNullOrWhiteSpace(s.Name)) return false;
-            if (string.IsNullOrWhiteSpace(s.Contact)) return false;
-            if (string.IsNullOrWhiteSpace(s.Address)) return false;
+            if (string.IsNullOrWhiteSpace(t.Name)) return false;
+            if (string.IsNullOrWhiteSpace(t.Contact)) return false;
+            if (string.IsNullOrWhiteSpace(t.Address)) return false;
 
-            return CustomerDL.UpdateCustomers(s, id);
+            return _customerDL.Add(t);
+        }
+
+        public bool Update(Customers t, int id)
+        {
+            if (string.IsNullOrWhiteSpace(t.Name)) return false;
+            if (string.IsNullOrWhiteSpace(t.Contact)) return false;
+            if (string.IsNullOrWhiteSpace(t.Address)) return false;
+
+            return _customerDL.Update(t, id);
         }
 
         public bool Delete(int id)
         {
-            return CustomerDL.DeleteCustomer(id);
+            if (id <= 0) return false;
+
+            return _customerDL.Delete(id);
         }
 
         public List<Customers> GetList()
         {
-            return CustomerDL.GetCustomers();
+            return _customerDL.GetAllList();
         }
 
         public List<Customers> GetListByName(string name)
@@ -39,5 +48,11 @@ namespace sample.BL
             return CustomerDL.SearchCustomersByName(name);
         }
 
+        public Customers GetById(int id)
+        {
+            if (id <= 0) return null;
+
+            return _customerDL.GetById(id);
+        }
     }
 }

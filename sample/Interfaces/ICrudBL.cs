@@ -8,7 +8,7 @@ namespace sample.Interfaces
         bool Update(T t, int id);
         bool Delete(int id);
         List<T> GetList();
+        T GetById(int id);
 
-        List<T> GetListByName(string name);
     }
 }

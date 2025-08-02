@@ -101,7 +101,7 @@ namespace sample.dL
 
             try
             {
-                string query = @"insert into customerpayments (CustomerId,BillID,'payed amount',Dueamount,Notes) values (@customerID,@billID,@payedAmount,@dueamount,@notes)";
+                string query = @"insert into customerpayments (CustomerId,BillID,`payed amount`,Dueamount,Notes) values (@customerID,@billID,@payedAmount,@dueamount,@notes)";
                 var parameterDict = new Dictionary<string, object>
                 {
                     {"@customerID", t.CustomerId },
@@ -129,7 +129,7 @@ namespace sample.dL
                 string query = @"update customerpayments 
                                  set CustomerId = @customerID, 
                                      BillId = @billID,               
-                                     PayedAmount = @payedAmount,
+                                     `payed amount` = @payedAmount,
                                     DueAmount = @dueamount    ,
                                     notes = @Notes    
                                  where PaymentId = @id";
@@ -178,7 +178,7 @@ namespace sample.dL
         public List<CustomerPayments> GetAllList()
         {
 
-            string query = "SELECT CustomerId,BillID,'payed amount',Dueamount,Notes FROM customerpayments";
+            string query = "SELECT CustomerId,BillID,`payed amount`,Dueamount,Notes FROM customerpayments";
             List<CustomerPayments> cus = new List<CustomerPayments>();
 
             using (var conn = DatabaseHelper.GetConnection())
@@ -191,11 +191,12 @@ namespace sample.dL
                     {
                         CustomerPayments s = new CustomerPayments
                         {
-                            CustomerId = Convert.ToInt32(reader["CustomerId"]),
-                            BillId = Convert.ToInt32(reader["BillID"]),
-                            PayedAmount = Convert.ToInt32(reader["'payed amount'"]),
-                            DueAmount = Convert.ToInt32(reader["Dueamount"]),
-                            Notes = reader["Notes"].ToString()
+                            CustomerId = reader["CustomerId"] != DBNull.Value ? Convert.ToInt32(reader["CustomerId"]) : 0,
+                            BillId = reader["BillID"] != DBNull.Value ? Convert.ToInt32(reader["BillID"]) : 0,
+                            PayedAmount = reader["payed amount"] != DBNull.Value ? Convert.ToInt32(reader["payed amount"]) : 0,
+                            DueAmount = reader["Dueamount"] != DBNull.Value ? Convert.ToInt32(reader["Dueamount"]) : 0,
+                            
+                            Notes = reader["Notes"] != DBNull.Value ? reader["Notes"].ToString() : string.Empty
                         };
                         cus.Add(s);
                     }
@@ -204,5 +205,38 @@ namespace sample.dL
 
             return cus;
         }
+
+        public CustomerPayments GetById(int id)
+        {
+            string query = "SELECT CustomerId,BillID,`payed amount`,Dueamount,Notes FROM customerbills WHERE PaymentId=@id";
+            CustomerPayments payments = null;
+
+            using (var conn = DatabaseHelper.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            payments = new CustomerPayments
+                            {
+                                CustomerId = reader["CustomerId"] != DBNull.Value ? Convert.ToInt32(reader["CustomerId"]) : 0,
+                                BillId = reader["BillID"] != DBNull.Value ? Convert.ToInt32(reader["BillID"]) : 0,
+                                PayedAmount = reader["payed amount"] != DBNull.Value ? Convert.ToInt32(reader["payed amount"]) : 0,
+                                DueAmount = reader["Dueamount"] != DBNull.Value ? Convert.ToInt32(reader["Dueamount"]) : 0,
+                                Notes = reader["Notes"] != DBNull.Value ? reader["Notes"].ToString() : string.Empty
+                            };
+                        }
+                    }
+                }
+            }
+
+            return payments;
+        }
+    }
     }
 }
