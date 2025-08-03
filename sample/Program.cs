@@ -3,6 +3,8 @@ using Poultary.Interfaces;
 using pro.BL.Bl;
 using pro.DL;
 using pro.Interface;
+using sample.Repository;
+using sample.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddScoped<chickbatchDL>();
 builder.Services.AddScoped<ChickenBatchInterface, ChickenbatchBL>();
 builder.Services.AddScoped<SupplierDL>();
 builder.Services.AddScoped<Isupplier, SupplierBL>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 var app = builder.Build();
 
@@ -34,7 +38,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=Dashboard}/{id?}")
+    pattern: "{controller=Customer}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 app.Run();

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Poultary.BL.Bl;
-using Poultary.BL.Models;
 using Poultary.Interfaces;
 using PoultryProject.DL;
 using pro.DL;
+using sample.Models;
 
 namespace sample.Controllers
 {

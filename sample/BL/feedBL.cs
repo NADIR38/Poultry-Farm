@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Poultary.Interfaces;
-using Poultary.BL.Models;
 using Poultary.DL;
+using sample.Models;
 
 namespace Poultary.BL.Bl
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-using Poultary.BL.Models;
+using sample.Models;
 
 namespace Poultary.DL
 {
