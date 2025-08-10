@@ -38,7 +38,7 @@
                 </li>
             </ul>
 
-            <div class=" d-flex align-items-center pr-3">
+            <div class="d-flex align-items-center pr-3">
                 <button class="btn btn-outline-secondary btn-sm" id="theme-toggle">🌓 Toggle Theme</button>
             </div>
         </nav>
@@ -123,7 +123,27 @@
                                 </li>
                             </ul>
                         </li>
-                        
+                       <!--Staff-->
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-truck"></i>
+                                <p>Staff <i class="right fas fa-angle-left"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a asp-controller="Staff" asp-action="Index" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>View Staff</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Staff" asp-action="Create" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Add Staff</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a asp-controller="Customer" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
@@ -142,7 +162,7 @@
         <div class="content-wrapper flex-grow-1">
             <div class="content-header px-3 pt-3">
                 <div class="container-fluid">
-                    <h1 class="m-0 text-dark">@ViewData["Title"]</h1>
+                    <h1 class="text-dark m-0">@ViewData["Title"]</h1>
                 </div>
             </div>
             <div class="content px-3 pb-3">
@@ -160,7 +180,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="main-footer text-center py-2 mt-auto">
+        <footer class="main-footer mt-auto py-2 text-center">
             <strong>&copy; 2025 Poultry Admin</strong> — <a asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
         </footer>
 

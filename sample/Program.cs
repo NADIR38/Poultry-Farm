@@ -18,6 +18,8 @@ builder.Services.AddScoped<chickbatchDL>();
 builder.Services.AddScoped<ChickenBatchInterface, ChickenbatchBL>();
 builder.Services.AddScoped<SupplierDL>();
 builder.Services.AddScoped<Isupplier, SupplierBL>();
+builder.Services.AddScoped<StaffDL>();
+builder.Services.AddScoped<Istaff, StaffBL>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 

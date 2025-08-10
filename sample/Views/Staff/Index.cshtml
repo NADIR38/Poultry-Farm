@@ -1,0 +1,48 @@
+﻿@model List<pro.BL.Model.Staffs>
+@{
+    
+    Layout = "_Layout";
+}
+<section class="content mt-4">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="text-primary">🛒 Staff</h2>
+            <a asp-action="Create" class="btn btn-success">➕ Add New Staff</a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table-bordered table-striped m-0 table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Contact</th>
+                                <th>CNIC</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var staff in Model)
+                            {
+                                <tr>
+                                    <td>@staff.Name</td>
+                                    <td>@staff.Role</td>
+                                    <td>@staff.Contact</td>
+                                    <td>@staff.CNIC</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@staff.StaffID" class="btn btn-sm btn-warning me-1">✏️ Edit</a>
+                                        <form asp-action="Delete" asp-route-id="@staff.StaffID" method="post" onsubmit="return confirm('Are you sure you want to delete this Staff?');" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm">🗑 Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
