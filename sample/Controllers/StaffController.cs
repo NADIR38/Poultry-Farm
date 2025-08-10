@@ -15,10 +15,21 @@ namespace sample.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string searchTerm = null)
         {
-            var Satff=_istaff.GetStaff();
-            return View(Satff);
+            var staffList = _istaff.GetStaff();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                staffList = staffList
+                    .Where(s => s.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                s.Role.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                s.Contact.Contains(searchTerm) ||
+                                s.CNIC.Contains(searchTerm))
+                    .ToList();
+            }
+
+            return View(staffList);
         }
 
         [HttpGet]
@@ -91,5 +102,7 @@ namespace sample.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
     }
 }
