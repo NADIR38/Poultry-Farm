@@ -1,0 +1,59 @@
+﻿@model pro.BL.Model.Staffs
+
+@{
+    // ViewData["Title"] = "Edit Staff";
+}
+
+<style>
+    label {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    input.form-control {
+        color: black;
+        font-size: 1.1rem;
+        background-color: white;
+    }
+</style>
+
+<h2 class="text-white">Edit Staff</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="StaffID" />
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Contact"></label>
+        <input asp-for="Contact" class="form-control" />
+        <span asp-validation-for="Contact" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Role"></label>
+        <select asp-for="Role" class="form-control">
+            <option value="Admin">Admin</option>
+            <option value="Employee">Employee</option>
+        </select>
+        <span asp-validation-for="Role" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CNIC"></label>
+        <input asp-for="CNIC" class="form-control" />
+        <span asp-validation-for="CNIC" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

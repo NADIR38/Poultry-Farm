@@ -322,6 +322,11 @@ body[data-theme="dark"] .content-wrapper {
 .main-sidebar {
     background-color: #112d40;
 }
+#roleDropdown { /* ID tum apne select tag me de do */
+    margin-top: 10px; /* Upar ka gap */
+    margin-bottom: 15px;
+}
+
 /*body[data-theme="dark"] .main-header,
 body[data-theme="dark"] .main-sidebar,
 body[data-theme="dark"] .main-footer {*/
